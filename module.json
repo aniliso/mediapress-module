@@ -1,0 +1,17 @@
+{
+    "name": "Mediapress",
+    "alias": "mediapress",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 1,
+    "providers": [
+        "Modules\\Mediapress\\Providers\\MediapressServiceProvider",
+        "Modules\\Mediapress\\Providers\\RouteServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        
+    ],
+    "requires": []
+}
