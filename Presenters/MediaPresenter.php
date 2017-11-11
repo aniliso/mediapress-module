@@ -41,13 +41,13 @@ class MediaPresenter extends BasePresenter
         }
     }
 
-    public function media_image($width=400, $height=400)
+    public function media_image($width=400, $height=400, $mode='resize', $quality=70)
     {
         switch ($this->entity->media_type)
         {
             case 'news':
             case 'web':
-                return $this->firstImage($width, $height, 'fit', 70);
+                return $this->firstImage($width, $height, $mode, $quality);
                 break;
 
             case 'tv':
