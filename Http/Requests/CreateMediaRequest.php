@@ -13,7 +13,7 @@ class CreateMediaRequest extends BaseFormRequest
         return [
             'media_desc' => 'check_domain',
             'release_at' => 'required|date_format:d.m.Y',
-            'sorting'    => 'required|integer',
+            //'sorting'    => 'required|integer',
             'brand'      => 'required'
         ];
     }

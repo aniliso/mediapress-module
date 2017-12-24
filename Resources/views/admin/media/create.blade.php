@@ -65,7 +65,7 @@
 
                     {!! Form::normalInput('brand', trans('mediapress::media.form.brand'), $errors, old('brand'), []) !!}
 
-                    {!! Form::normalInput('sorting', trans('mediapress::media.form.sorting'), $errors, old('brand'), []) !!}
+                    {{--{!! Form::normalInput('sorting', trans('mediapress::media.form.sorting'), $errors, old('brand'), []) !!}--}}
 
                     <div class="form-group">
                         {!! Form::hidden('status', 0) !!}
