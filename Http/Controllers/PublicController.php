@@ -34,17 +34,16 @@ class PublicController extends BasePublicController
      */
     public function index($category=null)
     {
-        $medias = $this->media->findByType($category);
+        $medias         = $this->media->findByType($category);
 
-        $title = !is_null($category) ? app('mediaTypes')[$category] : trans('mediapress::mediapress.title.mediapress');
-        $this->setTitle($title)
-             ->setDescription($title);
+        $category       = isset(app('mediaTypes')[$category]) ? ['title' => app('mediaTypes')[$category], 'url' => route('mediapress.media.category', [$category])] : null;
+        $title          = isset($category) ? $category['title'] : trans('mediapress::mediapress.title.mediapress');
+
+        $this->setTitle($title)->setDescription($title);
 
         Breadcrumbs::register('mediapress.category', function ($breadcrumbs) use ($category) {
             $breadcrumbs->parent('mediapress.index');
-            if(!is_null($category)) {
-                $breadcrumbs->push(app('mediaTypes')[$category], route('mediapress.media.category', [$category]));
-            }
+            if($category) $breadcrumbs->push($category['title'], $category['url']);
         });
 
         return view('mediapress::index', compact('medias', 'category'));

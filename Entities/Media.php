@@ -30,4 +30,9 @@ class Media extends Model
     {
         return $this->attributes['release_at'] = Carbon::parse($value);
     }
+
+    public function getUrlAttribute()
+    {
+        return route('mediapress.media.view', $this->slug);
+    }
 }
