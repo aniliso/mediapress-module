@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'prefix' => 'kurumsal/basinda-biz',
+    'prefix' => 'basinda-biz',
     'media'  => [
         'index'    => '',
         'category' => '/{slug}',
