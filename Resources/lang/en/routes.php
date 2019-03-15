@@ -1,10 +1,9 @@
 <?php
 
 return [
-    'prefix' => 'corporate/press-release',
     'media'  => [
-        'index'    => '',
-        'category' => '/{slug}',
-        'view'     => '/basin/{mediaPressView}'
+        'index'    => 'mediapress',
+        'category' => 'mediapress/{slug}',
+        'view'     => 'mediapress/show/{mediaPressView}'
     ]
 ];

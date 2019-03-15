@@ -49,8 +49,11 @@ class PublicController extends BasePublicController
         return view('mediapress::index', compact('medias', 'category'));
     }
 
-    public function view(Media $media)
+    public function view($slug=null)
     {
+        $media = $this->media->findBySlug($slug);
+        if(!$media) return abort(404);
+
         $this->setTitle($media->title)
             ->setDescription(\Str::words($media->description, 10));
 

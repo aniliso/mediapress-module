@@ -1,10 +1,9 @@
 <?php
 
 return [
-    'prefix' => 'basinda-biz',
     'media'  => [
-        'index'    => '',
-        'category' => '/{slug}',
-        'view'     => '/basin/{mediaPressView}'
+        'index'    => 'basinda-biz',
+        'category' => 'basinda-biz/{slug}',
+        'view'     => 'basinda-biz/basin/{slug}'
     ]
 ];

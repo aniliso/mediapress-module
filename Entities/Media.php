@@ -33,6 +33,6 @@ class Media extends Model
 
     public function getUrlAttribute()
     {
-        return route('mediapress.media.view', $this->slug);
+        return localize_trans_url(locale(), 'mediapress::routes.media.view', ['slug'=>$this->slug]);
     }
 }
