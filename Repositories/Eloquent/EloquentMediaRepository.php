@@ -49,6 +49,6 @@ class EloquentMediaRepository extends EloquentBaseRepository implements MediaRep
         if(in_array($type, array_keys(app('mediaTypes')))) {
             return $this->model->where('media_type', $type)->with('translations')->orderBy('release_at', 'desc')->paginate($per_page);
         }
-        return $this->model->where('media_type', $type)->orderBy('release_at', 'desc')->paginate($per_page);
+        return $this->model->with('translations')->orderBy('release_at', 'desc')->paginate($per_page);
     }
 }
