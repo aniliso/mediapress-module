@@ -34,7 +34,7 @@ class PublicController extends BasePublicController
      */
     public function index($category=null)
     {
-        $medias         = $this->media->findByType($category);
+        $medias         = $this->media->findByType($category, 5);
 
         $category       = isset(app('mediaTypes')[$category]) ? ['slug'=>$category, 'title' => app('mediaTypes')[$category], 'url' => route('mediapress.media.category', [$category])] : null;
         $title          = isset($category) ? $category['title'] : trans('mediapress::mediapress.title.mediapress');
