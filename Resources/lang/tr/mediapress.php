@@ -1,7 +1,7 @@
 <?php
 
 return [
-  'title' => [
-      'mediapress' => 'Basında Biz'
-  ]
+    'title' => [
+        'mediapress' => 'Basında Biz'
+    ]
 ];

@@ -18,11 +18,6 @@
             <div class="box">
                 <div class="box-body" style="padding: 20px;">
 
-                    {!! Form::normalSelect('media_type', trans('mediapress::media.form.media_type'), $errors, $mediaTypes, $media, ['class'=>'form-control select2', 'v-model'=>'media.type', 'v-on:change'=>'{ media.desc = "" }']) !!}
-
-                    {!! Form::hidden('media_desc') !!}
-                    {!! Form::normalInput('media_desc', trans('mediapress::media.form.media_desc'), $errors, $media, ['v-model'=>'media.desc', 'v-if'=>"media.type == 'tv' || media.type == 'web'"]) !!}
-
                     <div class="languages">
                         <div class="nav-tabs-custom">
                             @include('partials.form-tab-headers')
@@ -50,6 +45,8 @@
         <div class="col-md-4">
             <div class="box">
                 <div class="box-body" style="padding: 20px;">
+                    {!! Form::normalSelect('category_id', trans('mediapress::category.title.category'), $errors, $categoryLists, isset($media->category->id) ? $media->category->id : '') !!}
+
                     <div class="form-group{{ $errors->has("start_at") ? ' has-error' : '' }}">
                         {!! Form::label("release_at", trans('mediapress::media.form.release_at').':') !!}
                         <div class='input-group date' id='release_at'>
@@ -61,7 +58,7 @@
 
                     {!! Form::normalInput('brand', trans('mediapress::media.form.brand'), $errors, $media, []) !!}
 
-                    {{--{!! Form::normalInput('sorting', trans('mediapress::media.form.sorting'), $errors, $media, []) !!}--}}
+                    {!! Form::normalInput('media_desc', trans('mediapress::media.form.media_desc'), $errors, $media) !!}
 
                     <div class="form-group">
                         {!! Form::hidden('status', 0) !!}
@@ -100,29 +97,6 @@
 @stop
 
 @push('js-stack')
-<script src="{{ Module::asset('mediapress:js/vue.js') }}"></script>
-<script src="{{ Module::asset('mediapress:js/axios.min.js') }}"></script>
-<script type="text/javascript">
-    var app = new Vue({
-        el: '#app',
-        data: {
-            media: {
-                type: '{{ old('media_type', $media->media_type) }}',
-                desc: '{{ old('media_desc', $media->media_desc) }}'
-            }
-        }
-    });
-    $(document).ready(function(){
-        $('#release_at').datetimepicker({
-            locale: '<?= App::getLocale() ?>',
-            allowInputToggle: true,
-            format: 'DD.MM.YYYY'
-        });
-    });
-</script>
-@endpush
-
-@push('js-stack')
     <script type="text/javascript">
         $( document ).ready(function() {
             $(document).keypressAction({
@@ -137,6 +111,15 @@
             $('input[type="checkbox"].flat-blue, input[type="radio"].flat-blue').iCheck({
                 checkboxClass: 'icheckbox_flat-blue',
                 radioClass: 'iradio_flat-blue'
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $('#release_at').datetimepicker({
+                locale: '<?= App::getLocale() ?>',
+                allowInputToggle: true,
+                format: 'DD.MM.YYYY'
             });
         });
     </script>

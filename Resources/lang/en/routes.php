@@ -1,9 +1,11 @@
 <?php
 
 return [
-    'media'  => [
+    'media'    => [
         'index'    => 'mediapress',
-        'category' => 'mediapress/{slug}',
-        'view'     => 'mediapress/show/{mediaPressView}'
+        'view'     => 'mediapress/show/{slug}'
+    ],
+    'category' => [
+        'slug' => 'mediapress/category/{slug}'
     ]
 ];

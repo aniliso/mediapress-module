@@ -37,6 +37,41 @@ $router->group(['prefix' =>'/mediapress'], function (Router $router) {
         'uses' => 'MediaController@destroy',
         'middleware' => 'can:mediapress.media.destroy'
     ]);
+
+    $router->bind('mediapressCategory', function ($id) {
+        return app('Modules\Mediapress\Repositories\CategoryRepository')->find($id);
+    });
+    $router->get('categories', [
+        'as' => 'admin.mediapress.category.index',
+        'uses' => 'CategoryController@index',
+        'middleware' => 'can:mediapress.categories.index'
+    ]);
+    $router->get('categories/create', [
+        'as' => 'admin.mediapress.category.create',
+        'uses' => 'CategoryController@create',
+        'middleware' => 'can:mediapress.categories.create'
+    ]);
+    $router->post('categories', [
+        'as' => 'admin.mediapress.category.store',
+        'uses' => 'CategoryController@store',
+        'middleware' => 'can:mediapress.categories.create'
+    ]);
+    $router->get('categories/{mediapressCategory}/edit', [
+        'as' => 'admin.mediapress.category.edit',
+        'uses' => 'CategoryController@edit',
+        'middleware' => 'can:mediapress.categories.edit'
+    ]);
+    $router->put('categories/{mediapressCategory}', [
+        'as' => 'admin.mediapress.category.update',
+        'uses' => 'CategoryController@update',
+        'middleware' => 'can:mediapress.categories.edit'
+    ]);
+    $router->delete('categories/{mediapressCategory}', [
+        'as' => 'admin.mediapress.category.destroy',
+        'uses' => 'CategoryController@destroy',
+        'middleware' => 'can:mediapress.categories.destroy'
+    ]);
+
 // append
 
 });

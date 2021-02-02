@@ -38,38 +38,29 @@ class MediapressServiceProvider extends ServiceProvider
             return $app;
         });
 
-        \Validator::extend('check_domain', function ($attributes, $value, $parameters, $validator) {
-            if(!is_null($value)) {
-                try {
-                    $client = new Client();
-                    $client->request('GET', $value);
-                    return true;
-                }
-                catch (\Exception $exception) {
-                    return false;
-                }
-            }
-            return true;
-        });
+//        \Validator::extend('check_domain', function ($attributes, $value, $parameters, $validator) {
+//            if(!is_null($value)) {
+//                try {
+//                    $client = new Client();
+//                    $client->request('GET', $value);
+//                    return true;
+//                }
+//                catch (\Exception $exception) {
+//                    return false;
+//                }
+//            }
+//            return true;
+//        });
 
-        $this->app->singleton('mediaTypes', function() {
-           return  [
-               'web'  => trans('mediapress::media.select.media_type.web'),
-               'tv'   => trans('mediapress::media.select.media_type.tv'),
-               'news' => trans('mediapress::media.select.media_type.news')
-           ];
-        });
-
-        view()->composer('mediapress::*', function(){
-           view()->share('mediaTypes', app('mediaTypes'));
-        });
+        \Widget::register('mediapressCategories', '\Modules\Mediapress\Widgets\MediaPressWidget@categories');
+        \Widget::register('mediapressYears', '\Modules\Mediapress\Widgets\MediaPressWidget@years');
+        \Widget::register('mediapressYearsByCategory', '\Modules\Mediapress\Widgets\MediaPressWidget@yearsByCategory');
     }
 
     public function boot()
     {
         $this->publishConfig('mediapress', 'permissions');
         $this->publishConfig('mediapress', 'config');
-
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
     }
 
@@ -95,6 +86,19 @@ class MediapressServiceProvider extends ServiceProvider
                 }
 
                 return new \Modules\Mediapress\Repositories\Cache\CacheMediaDecorator($repository);
+            }
+        );
+
+        $this->app->bind(
+            'Modules\Mediapress\Repositories\CategoryRepository',
+            function () {
+                $repository = new \Modules\Mediapress\Repositories\Eloquent\EloquentCategoryRepository(new \Modules\Mediapress\Entities\Category());
+
+                if (! config('app.cache')) {
+                    return $repository;
+                }
+
+                return new \Modules\Mediapress\Repositories\Cache\CacheCategoryDecorator($repository);
             }
         );
     }

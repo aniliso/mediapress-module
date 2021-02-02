@@ -11,7 +11,7 @@ class UpdateMediaRequest extends BaseFormRequest
     public function rules()
     {
         return [
-            'media_desc' => 'check_domain',
+            'media_desc' => '',
             'release_at' => 'required|date_format:d.m.Y',
             //'sorting'    => 'required|integer',
             'brand'      => 'required'

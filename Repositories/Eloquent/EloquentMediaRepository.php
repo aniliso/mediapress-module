@@ -2,6 +2,7 @@
 
 namespace Modules\Mediapress\Repositories\Eloquent;
 
+use Illuminate\Database\Eloquent\Builder;
 use Modules\Mediapress\Events\Handlers\MediaSaving;
 use Modules\Mediapress\Events\MediaWasCreated;
 use Modules\Mediapress\Events\MediaWasDeleted;
@@ -40,15 +41,21 @@ class EloquentMediaRepository extends EloquentBaseRepository implements MediaRep
         return $model->delete();
     }
 
-    /**
-     * @param string $type
-     * @return mixed
-     */
-    public function findByType($type = '', $per_page = 10)
+    public function findByYear($year = '', $per_page = 10)
     {
-        if(in_array($type, array_keys(app('mediaTypes')))) {
-            return $this->model->where('media_type', $type)->with('translations')->orderBy('release_at', 'desc')->paginate($per_page);
-        }
-        return $this->model->with('translations')->orderBy('release_at', 'desc')->paginate($per_page);
+        return $this->model
+            ->whereYear($year)
+            ->paginate($per_page);
+    }
+
+
+    public function findByCategoryYear($slug, $year, $per_page = 10)
+    {
+        return $this->model
+            ->whereYear($year)
+            ->whereHas("category.translations", function (Builder $q) use ($slug) {
+                $q->where('mediapress__category_translations.slug', $slug);
+            })
+            ->paginate($per_page);
     }
 }

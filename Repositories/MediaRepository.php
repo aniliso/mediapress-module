@@ -7,8 +7,11 @@ use Modules\Core\Repositories\BaseRepository;
 interface MediaRepository extends BaseRepository
 {
     /**
-     * @param string $type
+     * @param string $year
+     * @param int $per_page
      * @return mixed
      */
-    public function findByType($type='', $per_page=10);
+    public function findByYear($year='', $per_page=10);
+
+    public function findByCategoryYear($slug, $year, $per_page=10);
 }

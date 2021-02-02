@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use Modules\Mediapress\Entities\Media;
 use Modules\Mediapress\Http\Requests\CreateMediaRequest;
 use Modules\Mediapress\Http\Requests\UpdateMediaRequest;
+use Modules\Mediapress\Repositories\CategoryRepository;
 use Modules\Mediapress\Repositories\MediaRepository;
 use Modules\Core\Http\Controllers\Admin\AdminBaseController;
 
@@ -17,12 +18,19 @@ class MediaController extends AdminBaseController
      * @var MediaRepository
      */
     private $media;
+    /**
+     * @var CategoryRepository
+     */
+    private $category;
 
-    public function __construct(MediaRepository $media)
+    public function __construct(MediaRepository $media, CategoryRepository $category)
     {
         parent::__construct();
 
         $this->media = $media;
+        $this->category = $category;
+
+        view()->share('categoryLists', $this->category->all()->pluck('name', 'id')->toArray());
     }
 
     /**

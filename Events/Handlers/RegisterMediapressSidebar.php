@@ -19,11 +19,27 @@ class RegisterMediapressSidebar extends AbstractAdminSidebar
             $group->item(trans('mediapress::mediapress.title.mediapress'), function (Item $item) {
                 $item->icon('fa fa-globe');
                 $item->weight(10);
-                $item->append('admin.mediapress.media.create');
-                $item->route('admin.mediapress.media.index');
                 $item->authorize(
-                    $this->auth->hasAccess('mediapress.media.create')
+                    $this->auth->hasAccess('mediapress.media.index')
                 );
+                $item->item(trans('mediapress::media.title.media'), function (Item $item) {
+                    $item->icon('fa fa-globe');
+                    $item->weight(0);
+                    $item->append('admin.mediapress.media.create');
+                    $item->route('admin.mediapress.media.index');
+                    $item->authorize(
+                        $this->auth->hasAccess('mediapress.media.index')
+                    );
+                });
+                $item->item(trans('mediapress::category.title.category'), function (Item $item) {
+                    $item->icon('fa fa-copy');
+                    $item->weight(1);
+                    $item->append('admin.mediapress.category.create');
+                    $item->route('admin.mediapress.category.index');
+                    $item->authorize(
+                        $this->auth->hasAccess('mediapress.categories.index')
+                    );
+                });
             });
         });
 

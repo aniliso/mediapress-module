@@ -15,17 +15,30 @@ class CacheMediaDecorator extends BaseCacheDecorator implements MediaRepository
     }
 
     /**
-     * @param string $type
-     * @return mixed
+     * @param string $year
+     * @param int $per_page
+     * @return array|mixed
      */
-    public function findByType($type = '', $per_page = 10)
+    public function findByYear($year = '', $per_page = 10)
     {
         $page = \Request::has('page') ? \Request::query('page') : 1;
         return $this->cache
             ->tags([$this->entityName, 'global'])
-            ->remember("{$this->locale}.{$this->entityName}.findByType.{$type}.{$per_page}.{$page}", $this->cacheTime,
-                function () use ($type, $per_page) {
-                    return $this->repository->findByType($type, $per_page);
+            ->remember("{$this->locale}.{$this->entityName}.findByYear.{$year}.{$per_page}.{$page}", $this->cacheTime,
+                function () use ($year, $per_page) {
+                    return $this->repository->findByYear($year, $per_page);
+                }
+            );
+    }
+
+    public function findByCategoryYear($slug, $year, $per_page = 10)
+    {
+        $page = \Request::has('page') ? \Request::query('page') : 1;
+        return $this->cache
+            ->tags([$this->entityName, 'global'])
+            ->remember("{$this->locale}.{$this->entityName}.findByCategoryYear.{$slug}.{$year}.{$per_page}.{$page}", $this->cacheTime,
+                function () use ($slug, $year, $per_page) {
+                    return $this->repository->findByCategoryYear($slug, $year, $per_page);
                 }
             );
     }

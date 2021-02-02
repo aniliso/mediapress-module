@@ -15,7 +15,7 @@ class Media extends Model
 
     protected $table = 'mediapress__media';
     public $translatedAttributes = ['title', 'slug', 'description'];
-    protected $fillable = ['title', 'slug', 'description', 'media_type', 'media_desc', 'brand', 'settings', 'sorting', 'release_at', 'status'];
+    protected $fillable = ['category_id', 'title', 'slug', 'description', 'media_desc', 'brand', 'settings', 'sorting', 'release_at', 'status'];
 
     protected $casts = [
         'status'     => 'int',
@@ -26,6 +26,21 @@ class Media extends Model
 
     protected $presenter = MediaPresenter::class;
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function scopeYears($query)
+    {
+        return $query->select(\DB::raw('YEAR(release_at) as years'))->groupBy(\DB::raw('YEAR(release_at)'));
+    }
+
+    public function scopeWhereYear($query, $year)
+    {
+        return $query->whereRaw("YEAR(release_at) = " . (int)$year);
+    }
+
     public function setReleaseAtAttribute($value)
     {
         return $this->attributes['release_at'] = Carbon::parse($value);
@@ -33,6 +48,11 @@ class Media extends Model
 
     public function getUrlAttribute()
     {
-        return localize_trans_url(locale(), 'mediapress::routes.media.view', ['slug'=>$this->slug]);
+        return localize_trans_url(locale(), 'mediapress::routes.media.view', ['mediapressMedia'=>$this->slug]);
+    }
+
+    public function getYearUrlAttribute()
+    {
+        return localize_trans_url(locale(), 'mediapress::routes.media.index', ['year'=>$this->years]);
     }
 }

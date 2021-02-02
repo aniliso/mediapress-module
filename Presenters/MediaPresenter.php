@@ -11,36 +11,6 @@ class MediaPresenter extends BasePresenter
     protected $transKey = 'mediapress::routes.media.view';
     protected $routeKey = 'mediapress.media.view';
 
-    public function media_type()
-    {
-        switch ($this->entity->media_type)
-        {
-            case 'web':
-                return trans('mediapress::media.select.media_type.web');
-            break;
-            case 'tv':
-                return trans('mediapress::media.select.media_type.tv');
-            break;
-            case 'news':
-                return trans('mediapress::media.select.media_type.news');
-            break;
-            default:
-                return null;
-        }
-    }
-
-    public function media_desc()
-    {
-        switch ($this->entity->media_type)
-        {
-            case 'tv':
-                return $this->entity->settings->video_html;
-                break;
-            default:
-                return null;
-        }
-    }
-
     public function media_image($width=400, $height=400, $mode='resize', $quality=70)
     {
         switch ($this->entity->media_type)
@@ -65,5 +35,10 @@ class MediaPresenter extends BasePresenter
             default:
                 return null;
         }
+    }
+
+    public function yearurl($slug = "")
+    {
+        return localize_trans_url(locale(), 'mediapress::routes.category.year', ['mediapressCategory' => $slug, 'year'=>$this->entity->years]);
     }
 }
