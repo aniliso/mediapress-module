@@ -2,10 +2,11 @@
 
 return [
     'media'    => [
-        'index'    => 'mediapress',
-        'view'     => 'mediapress/show/{slug}'
+        'index' => 'pressroom/{year?}',
+        'view'  => 'pressroom/press/{mediapressMedia}'
     ],
     'category' => [
-        'slug' => 'mediapress/category/{slug}'
+        'slug'  => 'pressroom/category/{mediapressCategory}',
+        'year'  => 'pressroom/{mediapressCategory}/{year}'
     ]
 ];

@@ -27,13 +27,6 @@ return [
         'status'      => '&nbsp;Status',
         'image'       => 'Image'
     ],
-    'select'           => [
-        'media_type' => [
-            'web'  => 'Website',
-            'tv'   => 'TV',
-            'news' => 'Newspaper/Magazine'
-        ]
-    ],
     'messages' => [
     ],
     'validation' => [

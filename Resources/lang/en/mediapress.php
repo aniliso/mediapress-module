@@ -2,6 +2,6 @@
 
 return [
   'title' => [
-      'mediapress' => 'Press Release'
+      'mediapress' => 'Press Room'
   ]
 ];
