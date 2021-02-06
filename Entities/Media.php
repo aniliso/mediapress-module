@@ -31,6 +31,11 @@ class Media extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function scopePublished($query)
+    {
+        return $query->whereStatus(1);
+    }
+
     public function scopeYears($query)
     {
         return $query->select(\DB::raw('YEAR(release_at) as years'))->groupBy(\DB::raw('YEAR(release_at)'));

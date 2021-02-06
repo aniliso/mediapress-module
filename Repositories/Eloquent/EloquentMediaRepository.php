@@ -58,4 +58,12 @@ class EloquentMediaRepository extends EloquentBaseRepository implements MediaRep
             })
             ->paginate($per_page);
     }
+
+    public function latest($limit = 6)
+    {
+        if (method_exists($this->model, 'translations')) {
+            return $this->model->with('translations')->orderBy('created_at')->published()->limit($limit)->get();
+        }
+        return $this->model->orderBy('created_at')->take($limit)->published()->get();
+    }
 }

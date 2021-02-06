@@ -42,4 +42,15 @@ class CacheMediaDecorator extends BaseCacheDecorator implements MediaRepository
                 }
             );
     }
+
+    public function latest($limit = 6)
+    {
+        return $this->cache
+            ->tags([$this->entityName, 'global'])
+            ->remember("{$this->locale}.{$this->entityName}.latest.{$limit}", $this->cacheTime,
+                function () use ($limit) {
+                    return $this->repository->latest($limit);
+                }
+            );
+    }
 }

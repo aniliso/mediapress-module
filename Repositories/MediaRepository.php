@@ -14,4 +14,6 @@ interface MediaRepository extends BaseRepository
     public function findByYear($year='', $per_page=10);
 
     public function findByCategoryYear($slug, $year, $per_page=10);
+
+    public function latest($limit=6);
 }

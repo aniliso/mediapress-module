@@ -52,6 +52,7 @@ class MediapressServiceProvider extends ServiceProvider
 //            return true;
 //        });
 
+        \Widget::register('mediapressLatest', '\Modules\Mediapress\Widgets\MediaPressWidget@latest');
         \Widget::register('mediapressCategories', '\Modules\Mediapress\Widgets\MediaPressWidget@categories');
         \Widget::register('mediapressYears', '\Modules\Mediapress\Widgets\MediaPressWidget@years');
         \Widget::register('mediapressYearsByCategory', '\Modules\Mediapress\Widgets\MediaPressWidget@yearsByCategory');

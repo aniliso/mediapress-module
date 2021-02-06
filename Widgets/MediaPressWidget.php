@@ -22,6 +22,15 @@ class MediaPressWidget
         $this->category = $category;
     }
 
+    public function latest($limit=6, $view="latest")
+    {
+        $medias = $this->media->latest($limit);
+        if($medias->count() > 0) {
+            return view('mediapress::widgets.'.$view, compact('medias'));
+        }
+        return null;
+    }
+
     public function categories($view='category')
     {
         $categories = $this->category->all();
