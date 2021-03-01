@@ -5,6 +5,7 @@ namespace Modules\Mediapress\Http\Controllers;
 use Breadcrumbs;
 use Illuminate\Http\Response;
 use Modules\Core\Http\Controllers\BasePublicController;
+use Modules\Mediapress\Entities\Brand;
 use Modules\Mediapress\Entities\Category;
 use Modules\Mediapress\Entities\Media;
 use Modules\Mediapress\Repositories\CategoryRepository;
@@ -43,7 +44,7 @@ class PublicController extends BasePublicController
     }
     /**
      * Display a listing of the resource.
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|Response|\Illuminate\View\View
      */
     public function index($year = "")
     {
@@ -106,5 +107,22 @@ class PublicController extends BasePublicController
         });
 
         return view('mediapress::year', compact('medias', 'category', 'year'));
+    }
+
+    public function brand(Brand $brand)
+    {
+        if(!$brand) return abort(404);
+
+        $medias = $this->media->findByBrand($brand->id, $this->per_page);
+
+        $this->setTitle($brand->title)
+            ->setDescription($brand->title);
+
+        Breadcrumbs::register('mediapress.brand', function ($breadcrumbs) use ($brand) {
+            $breadcrumbs->parent('mediapress.index');
+            $breadcrumbs->push($brand->title, $brand->url);
+        });
+
+        return view('mediapress::brand', compact('brand', 'medias'));
     }
 }

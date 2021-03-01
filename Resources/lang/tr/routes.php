@@ -6,7 +6,10 @@ return [
         'view'  => 'basinda-biz/basin/{mediapressMedia}'
     ],
     'category' => [
-        'slug'  => 'basinda-biz/kategori/{mediapressCategory}',
-        'year'  => 'basinda-biz/{mediapressCategory}/{year}'
-    ]
+        'slug' => 'basinda-biz/kategori/{mediapressCategory}',
+        'year' => 'basinda-biz/{mediapressCategory}/{year}'
+    ],
+    'brand'    => [
+        'slug' => 'basinda-biz/yayinci/{mediapressBrandSlug}'
+    ],
 ];

@@ -15,7 +15,7 @@ class Media extends Model
 
     protected $table = 'mediapress__media';
     public $translatedAttributes = ['title', 'slug', 'description'];
-    protected $fillable = ['category_id', 'title', 'slug', 'description', 'media_desc', 'brand', 'settings', 'sorting', 'release_at', 'status'];
+    protected $fillable = ['category_id', 'brand_id', 'title', 'slug', 'description', 'media_desc', 'brand', 'settings', 'sorting', 'release_at', 'status'];
 
     protected $casts = [
         'status'     => 'int',
@@ -29,6 +29,11 @@ class Media extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class, 'brand_id');
     }
 
     public function scopePublished($query)

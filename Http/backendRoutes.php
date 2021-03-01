@@ -72,6 +72,41 @@ $router->group(['prefix' =>'/mediapress'], function (Router $router) {
         'middleware' => 'can:mediapress.categories.destroy'
     ]);
 
+    //Brand
+    $router->bind('mediapressBrand', function ($id) {
+        return app('Modules\Mediapress\Repositories\BrandRepository')->find($id);
+    });
+    $router->get('brands', [
+        'as' => 'admin.mediapress.brand.index',
+        'uses' => 'BrandController@index',
+        'middleware' => 'can:mediapress.brands.index'
+    ]);
+    $router->get('brands/create', [
+        'as' => 'admin.mediapress.brand.create',
+        'uses' => 'BrandController@create',
+        'middleware' => 'can:mediapress.brands.create'
+    ]);
+    $router->post('brands', [
+        'as' => 'admin.mediapress.brand.store',
+        'uses' => 'BrandController@store',
+        'middleware' => 'can:mediapress.brands.create'
+    ]);
+    $router->get('brands/{mediapressBrand}/edit', [
+        'as' => 'admin.mediapress.brand.edit',
+        'uses' => 'BrandController@edit',
+        'middleware' => 'can:mediapress.brands.edit'
+    ]);
+    $router->put('brands/{mediapressBrand}', [
+        'as' => 'admin.mediapress.brand.update',
+        'uses' => 'BrandController@update',
+        'middleware' => 'can:mediapress.brands.edit'
+    ]);
+    $router->delete('brands/{mediapressBrand}', [
+        'as' => 'admin.mediapress.brand.destroy',
+        'uses' => 'BrandController@destroy',
+        'middleware' => 'can:mediapress.brands.destroy'
+    ]);
+
 // append
 
 });

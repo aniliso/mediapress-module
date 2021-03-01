@@ -13,7 +13,24 @@ interface MediaRepository extends BaseRepository
      */
     public function findByYear($year='', $per_page=10);
 
+    /**
+     * @param string $brand
+     * @param int $per_page
+     * @return mixed
+     */
+    public function findByBrand($brand='', $per_page=10);
+
+    /**
+     * @param $slug
+     * @param $year
+     * @param int $per_page
+     * @return mixed
+     */
     public function findByCategoryYear($slug, $year, $per_page=10);
 
+    /**
+     * @param int $limit
+     * @return mixed
+     */
     public function latest($limit=6);
 }

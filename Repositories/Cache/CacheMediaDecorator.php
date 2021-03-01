@@ -53,4 +53,16 @@ class CacheMediaDecorator extends BaseCacheDecorator implements MediaRepository
                 }
             );
     }
+
+    public function findByBrand($brand = '', $per_page = 10)
+    {
+        $page = \Request::has('page') ? \Request::query('page') : 1;
+        return $this->cache
+            ->tags([$this->entityName, 'global'])
+            ->remember("{$this->locale}.{$this->entityName}.findByBrand.{$brand}.{$per_page}.{$page}", $this->cacheTime,
+                function () use ($brand, $per_page) {
+                    return $this->repository->findByBrand($brand, $per_page);
+                }
+            );
+    }
 }

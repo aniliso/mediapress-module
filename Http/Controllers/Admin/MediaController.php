@@ -5,6 +5,7 @@ namespace Modules\Mediapress\Http\Controllers\Admin;
 use Embed\Embed;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Modules\Mediapress\Entities\Brand;
 use Modules\Mediapress\Entities\Media;
 use Modules\Mediapress\Http\Requests\CreateMediaRequest;
 use Modules\Mediapress\Http\Requests\UpdateMediaRequest;
@@ -29,8 +30,6 @@ class MediaController extends AdminBaseController
 
         $this->media = $media;
         $this->category = $category;
-
-        view()->share('categoryLists', $this->category->all()->pluck('name', 'id')->toArray());
     }
 
     /**

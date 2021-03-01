@@ -40,6 +40,15 @@ class RegisterMediapressSidebar extends AbstractAdminSidebar
                         $this->auth->hasAccess('mediapress.categories.index')
                     );
                 });
+                $item->item(trans('mediapress::brand.title.brands'), function (Item $item) {
+                    $item->icon('fa fa-copy');
+                    $item->weight(2);
+                    $item->append('admin.mediapress.brand.create');
+                    $item->route('admin.mediapress.brand.index');
+                    $item->authorize(
+                        $this->auth->hasAccess('mediapress.brands.index')
+                    );
+                });
             });
         });
 

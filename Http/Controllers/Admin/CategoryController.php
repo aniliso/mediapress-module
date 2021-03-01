@@ -23,8 +23,6 @@ class CategoryController extends AdminBaseController
         parent::__construct();
 
         $this->category = $category;
-
-        view()->share('statuses', $status->lists());
     }
 
     /**

@@ -61,7 +61,7 @@
                         {!! $errors->first("release_at", '<span class="help-block">:message</span>') !!}
                     </div>
 
-                    {!! Form::normalInput('brand', trans('mediapress::media.form.brand'), $errors, old('brand'), []) !!}
+                    {!! Form::normalSelect('brand', trans('mediapress::media.form.brand_id'), $errors, $brandLists) !!}
 
                     {!! Form::normalInput('media_desc', trans('mediapress::media.form.media_desc'), $errors, old('media_desc')) !!}
 

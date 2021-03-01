@@ -22,7 +22,7 @@ return [
         'slug'        => 'URL Yolu',
         'description' => 'Açıklama',
         'release_at'  => 'Yayın Tarihi',
-        'brand'       => 'Haber Kanalı',
+        'brand_id'    => 'Yayıncı',
         'sorting'     => 'Sıralama',
         'status'      => '&nbsp;Durum',
         'image'       => 'Resim'

@@ -15,6 +15,13 @@ $router->group(['prefix' => ''], function (Router $router) {
         'as'   => 'mediapress.media.view',
         'uses' => 'PublicController@view'
     ]);
+    $router->bind('mediapressBrandSlug', function ($slug) {
+        return app('Modules\Mediapress\Repositories\BrandRepository')->findBySlug($slug);
+    });
+    $router->get(LaravelLocalization::transRoute('mediapress::routes.brand.slug'), [
+        'as'   => 'mediapress.brand.slug',
+        'uses' => 'PublicController@brand'
+    ]);
     $router->bind('mediapressCategory', function ($slug) {
         return app('Modules\Mediapress\Repositories\CategoryRepository')->findBySlug($slug);
     });

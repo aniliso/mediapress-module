@@ -2,11 +2,11 @@
 
 @section('content-header')
     <h1>
-        {{ trans('mediapress::media.title.media') }}
+        {{ trans('mediapress::brand.title.brand') }}
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
-        <li class="active">{{ trans('mediapress::media.title.media') }}</li>
+        <li class="active">{{ trans('mediapress::brand.title.brand') }}</li>
     </ol>
 @stop
 
@@ -15,8 +15,8 @@
         <div class="col-xs-12">
             <div class="row">
                 <div class="btn-group pull-right" style="margin: 0 15px 15px 0;">
-                    <a href="{{ route('admin.mediapress.media.create') }}" class="btn btn-primary btn-flat" style="padding: 4px 10px;">
-                        <i class="fa fa-pencil"></i> {{ trans('mediapress::media.button.create media') }}
+                    <a href="{{ route('admin.mediapress.brand.create') }}" class="btn btn-primary btn-flat" style="padding: 4px 10px;">
+                        <i class="fa fa-pencil"></i> {{ trans('mediapress::brand.button.create brand') }}
                     </a>
                 </div>
             </div>
@@ -29,57 +29,53 @@
                     <table class="data-table table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>Id</th>
-                            <th>{{ trans('mediapress::media.form.release_at') }}</th>
-                            <th>{{ trans('mediapress::category.title.category') }}</th>
-                            <th>{{ trans('mediapress::media.form.brand_id') }}</th>
-                            <th>{{ trans('mediapress::media.form.title') }}</th>
+                            <th>ID</th>
+                            <th>{{ trans('mediapress::brand.title.brand') }}</th>
+                            <th>Haber Sayısı</th>
                             <th>{{ trans('core::core.table.created at') }}</th>
                             <th data-sortable="false">{{ trans('core::core.table.actions') }}</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <?php if (isset($medias)): ?>
-                        <?php foreach ($medias as $media): ?>
+                        <?php if (isset($brands)): ?>
+                        <?php foreach ($brands as $brand): ?>
                         <tr>
-                            <td>{{ $media->id }}</td>
                             <td>
-                                <a href="{{ route('admin.mediapress.media.edit', [$media->id]) }}">
-                                    {{ $media->release_at->format('d.m.Y') }}
+                                {{ $brand->id }}
+                            </td>
+                            <td>
+                                <a href="{{ route('admin.mediapress.brand.edit', [$brand->id]) }}">
+                                    {{ $brand->title }}
                                 </a>
                             </td>
                             <td>
-                                <a href="{{ route('admin.mediapress.media.edit', [$media->id]) }}">
-                                    {{ @$media->category->name }}
-                                </a>
-                            </td>
-                            <td>
-                                <a href="{{ route('admin.mediapress.media.edit', [$media->id]) }}">
-                                    @if($media->brand()->exists())
-                                    {{ $media->brand->title }}
+                                <a href="{{ route('admin.mediapress.brand.edit', [$brand->id]) }}">
+                                    @if($brand->media()->exists())
+                                    {{ $brand->media()->count() }}
                                     @endif
                                 </a>
                             </td>
                             <td>
-                                <a href="{{ route('admin.mediapress.media.edit', [$media->id]) }}">
-                                    {{ $media->title }}
-                                </a>
-                            </td>
-                            <td>
-                                <a href="{{ route('admin.mediapress.media.edit', [$media->id]) }}">
-                                    {{ $media->created_at }}
+                                <a href="{{ route('admin.mediapress.brand.edit', [$brand->id]) }}">
+                                    {{ $brand->created_at }}
                                 </a>
                             </td>
                             <td>
                                 <div class="btn-group">
-                                    <a href="{{ route('admin.mediapress.media.edit', [$media->id]) }}" class="btn btn-default btn-flat"><i class="fa fa-pencil"></i></a>
-                                    <button class="btn btn-danger btn-flat" data-toggle="modal" data-target="#modal-delete-confirmation" data-action-target="{{ route('admin.mediapress.media.destroy', [$media->id]) }}"><i class="fa fa-trash"></i></button>
+                                    <a href="{{ route('admin.mediapress.brand.edit', [$brand->id]) }}" class="btn btn-default btn-flat"><i class="fa fa-pencil"></i></a>
+                                    <button class="btn btn-danger btn-flat" data-toggle="modal" data-target="#modal-delete-confirmation" data-action-target="{{ route('admin.mediapress.brand.destroy', [$brand->id]) }}"><i class="fa fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
                         <?php endforeach; ?>
                         <?php endif; ?>
                         </tbody>
+                        <tfoot>
+                        <tr>
+                            <th>{{ trans('core::core.table.created at') }}</th>
+                            <th>{{ trans('core::core.table.actions') }}</th>
+                        </tr>
+                        </tfoot>
                     </table>
                     <!-- /.box-body -->
                     </div>
@@ -97,16 +93,16 @@
 @section('shortcuts')
     <dl class="dl-horizontal">
         <dt><code>c</code></dt>
-        <dd>{{ trans('mediapress::media.title.create media') }}</dd>
+        <dd>{{ trans('mediapress::brand.title.brand category') }}</dd>
     </dl>
 @stop
 
-@push('js-stack')
+@section('scripts')
     <script type="text/javascript">
         $( document ).ready(function() {
             $(document).keypressAction({
                 actions: [
-                    { key: 'c', route: "<?= route('admin.mediapress.media.create') ?>" }
+                    { key: 'c', route: "<?= route('admin.mediapress.category.create') ?>" }
                 ]
             });
         });
@@ -128,4 +124,4 @@
             });
         });
     </script>
-@endpush
+@stop

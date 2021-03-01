@@ -66,4 +66,12 @@ class EloquentMediaRepository extends EloquentBaseRepository implements MediaRep
         }
         return $this->model->orderBy('created_at')->take($limit)->published()->get();
     }
+
+    public function findByBrand($brand="", $per_page = 10)
+    {
+        return $this->model
+            ->where("brand_id", $brand)
+            ->orderBy('created_at', 'DESC')
+            ->paginate($per_page);
+    }
 }

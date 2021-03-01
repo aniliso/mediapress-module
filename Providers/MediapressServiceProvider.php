@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Modules\Core\Traits\CanPublishConfiguration;
 use Modules\Core\Events\BuildingSidebar;
 use Modules\Core\Traits\CanGetSidebarClassForModule;
+use Modules\Mediapress\Composer\Backend\CategoryComposer;
 use Modules\Mediapress\Events\Handlers\RegisterMediapressSidebar;
 use GuzzleHttp\Client;
 
@@ -38,6 +39,8 @@ class MediapressServiceProvider extends ServiceProvider
             return $app;
         });
 
+        view()->composer(['mediapress::admin.*'], CategoryComposer::class);
+
 //        \Validator::extend('check_domain', function ($attributes, $value, $parameters, $validator) {
 //            if(!is_null($value)) {
 //                try {
@@ -54,6 +57,7 @@ class MediapressServiceProvider extends ServiceProvider
 
         \Widget::register('mediapressLatest', '\Modules\Mediapress\Widgets\MediaPressWidget@latest');
         \Widget::register('mediapressCategories', '\Modules\Mediapress\Widgets\MediaPressWidget@categories');
+        \Widget::register('mediapressBrands', '\Modules\Mediapress\Widgets\MediaPressWidget@brands');
         \Widget::register('mediapressYears', '\Modules\Mediapress\Widgets\MediaPressWidget@years');
         \Widget::register('mediapressYearsByCategory', '\Modules\Mediapress\Widgets\MediaPressWidget@yearsByCategory');
     }
@@ -100,6 +104,20 @@ class MediapressServiceProvider extends ServiceProvider
                 }
 
                 return new \Modules\Mediapress\Repositories\Cache\CacheCategoryDecorator($repository);
+            }
+        );
+
+
+        $this->app->bind(
+            'Modules\Mediapress\Repositories\BrandRepository',
+            function () {
+                $repository = new \Modules\Mediapress\Repositories\Eloquent\EloquentBrandRepository(new \Modules\Mediapress\Entities\Brand());
+
+                if (! config('app.cache')) {
+                    return $repository;
+                }
+
+                return new \Modules\Mediapress\Repositories\Cache\CacheBrandDecorator($repository);
             }
         );
     }
