@@ -15,11 +15,14 @@ class Media extends Model
 
     protected $table = 'mediapress__media';
     public $translatedAttributes = ['title', 'slug', 'description'];
-    protected $fillable = ['category_id', 'brand_id', 'title', 'slug', 'description', 'media_desc', 'brand', 'settings', 'sorting', 'release_at', 'status'];
+    protected $fillable = [
+        'category_id', 'brand_id', 'title', 'slug', 'description', 'media_desc', 'brand', 'settings', 'sorting', 'release_at', 'status', 'media_type'
+    ];
 
     protected $casts = [
         'status'     => 'int',
-        'settings'   => 'object'
+        'settings'   => 'array',
+        'media_type' => 'enum'
     ];
 
     protected $dates = ['release_at'];
@@ -51,6 +54,11 @@ class Media extends Model
         return $query->whereRaw("YEAR(release_at) = " . (int)$year);
     }
 
+    public function scopeWhereType($query, $type)
+    {
+        return $query->where("media_type", $type);
+    }
+
     public function setReleaseAtAttribute($value)
     {
         return $this->attributes['release_at'] = Carbon::parse($value);
@@ -63,6 +71,6 @@ class Media extends Model
 
     public function getYearUrlAttribute()
     {
-        return localize_trans_url(locale(), 'mediapress::routes.media.index', ['year'=>$this->years]);
+        return localize_trans_url(locale(), 'mediapress::routes.media.year', ['year'=>$this->years]);
     }
 }

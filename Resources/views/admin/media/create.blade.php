@@ -30,6 +30,50 @@
                                         @include('mediapress::admin.media.partials.create-fields', ['lang' => $locale])
                                     </div>
                                 @endforeach
+                                <div class="box-body" v-if="media_type == 'digital'">
+                                    <fieldset>
+                                        <legend>@lang('mediapress::media.title.digital media')</legend>
+                                    <template v-for="(emr, key) in link">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label v-if="key == 0">@lang('mediapress::media.form.link.author')</label>
+                                                    <input :name="'settings[link]['+key+'][author]'" placeholder="@lang('mediapress::media.form.link.author')" class="form-control" :value="emr.author" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label v-if="key == 0">@lang('mediapress::media.form.link.title')</label>
+                                                    <input :name="'settings[link]['+key+'][title]'" placeholder="@lang('mediapress::media.form.link.title')" class="form-control" :value="emr.title" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label v-if="key == 0">@lang('mediapress::media.form.link.website')</label>
+                                                    <input :name="'settings[link]['+key+'][website]'" placeholder="@lang('mediapress::media.form.link.website')" class="form-control" :value="emr.website" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label v-if="key == 0">@lang('mediapress::media.form.link.date')</label>
+                                                    <date-picker :name="'settings[link]['+key+'][date]'" :config="options" placeholder="@lang('mediapress::media.form.link.title')" :value="emr.date"></date-picker>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label v-if="key == 0">&nbsp;</label>
+                                                <div class="form-group">
+                                                    <a class="btn-floating"
+                                                       v-on:click="addRow(key, 'link')" v-if="link.length < 20">
+                                                        <i class="fa fa-plus"></i></a>
+                                                    <a class="btn-floating"
+                                                       v-on:click="removeRow(key, 'link')" v-if="link.length > 1">
+                                                        <i class="fa fa-minus"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                    </fieldset>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -52,6 +96,10 @@
                 <div class="box-body">
                     {!! Form::normalSelect('category_id', trans('mediapress::category.title.category'), $errors, $categoryLists) !!}
 
+                    {!! Form::normalSelect('media_type', trans('mediapress::media.form.media_type'), $errors, $types, old('media_type'), [
+                    'v-model="media_type"'
+                    ]) !!}
+
                     <div class="form-group{{ $errors->has("start_at") ? ' has-error' : '' }}">
                         {!! Form::label("release_at", trans('mediapress::media.form.release_at').':') !!}
                         <div class='input-group date' id='release_at'>
@@ -61,9 +109,11 @@
                         {!! $errors->first("release_at", '<span class="help-block">:message</span>') !!}
                     </div>
 
-                    {!! Form::normalSelect('brand', trans('mediapress::media.form.brand_id'), $errors, $brandLists) !!}
+                    {!! Form::normalSelect('brand', trans('mediapress::media.form.brand_id'), $errors, ["Seçiniz"]+$brandLists) !!}
 
+                    <div v-if="media_type == 'physical'">
                     {!! Form::normalInput('media_desc', trans('mediapress::media.form.media_desc'), $errors, old('media_desc')) !!}
+                    </div>
 
                     <div class="form-group">
                         {!! Form::hidden('status', 0) !!}
@@ -72,8 +122,9 @@
                             {{ trans('mediapress::media.form.status') }}
                         </label>
                     </div>
-
-                    @mediaSingle('pressImage', null, null, trans('mediapress::media.form.image'))
+                    <div v-if="media_type == 'physical'">
+                    @mediaMultiple('pressImage', null, null, trans('mediapress::media.form.image'))
+                    </div>
                 </div>
             </div>
         </div>
@@ -92,6 +143,43 @@
 @stop
 
 @push('js-stack')
+    <script src="{!! Module::asset('mediapress:js/vue.js') !!}"></script>
+    <script src="{!! Module::asset('mediapress:js/vuedatetimepicker.js') !!}"></script>
+    <script>
+        Vue.component('date-picker', VueBootstrapDatetimePicker);
+        var app = new Vue({
+            el: '#app',
+            data: {
+                media_type: '{{ old('media_type', 'physical') }}',
+                settings: [],
+                link :
+                    @if(is_array(old('settings.link')))
+                        {!! json_encode(old('settings.link')) !!}
+                    @else
+                        [{ author: '', title   : '', website : '', date : '' }]
+                    @endif
+                ,
+                options: {
+                    format: 'DD.MM.YYYY',
+                    useCurrent: true,
+                    showClear: true,
+                    showClose: true,
+                }
+            },
+            methods: {
+                addRow: function (index, id) {
+                    if(id == 'link') {
+                        this.link.splice(index + 1, 0, {});
+                    }
+                },
+                removeRow: function (index, id) {
+                    if(id == 'link') {
+                        this.link.splice(index, 1);
+                    }
+                }
+            }
+        });
+    </script>
 
     <script type="text/javascript">
         $( document ).ready(function() {

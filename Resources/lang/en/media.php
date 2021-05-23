@@ -25,7 +25,11 @@ return [
         'brand'       => 'News Brand',
         'sorting'     => 'Sorting',
         'status'      => '&nbsp;Status',
-        'image'       => 'Image'
+        'image'       => 'Image',
+        'media_types' => [
+            'physical' => 'Physical Media',
+            'digital'  => 'Digital Media'
+        ]
     ],
     'messages' => [
     ],

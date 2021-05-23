@@ -39,7 +39,7 @@ class MediapressServiceProvider extends ServiceProvider
             return $app;
         });
 
-        view()->composer(['mediapress::admin.*'], CategoryComposer::class);
+        view()->composer(['mediapress::*'], CategoryComposer::class);
 
 //        \Validator::extend('check_domain', function ($attributes, $value, $parameters, $validator) {
 //            if(!is_null($value)) {
@@ -60,6 +60,8 @@ class MediapressServiceProvider extends ServiceProvider
         \Widget::register('mediapressBrands', '\Modules\Mediapress\Widgets\MediaPressWidget@brands');
         \Widget::register('mediapressYears', '\Modules\Mediapress\Widgets\MediaPressWidget@years');
         \Widget::register('mediapressYearsByCategory', '\Modules\Mediapress\Widgets\MediaPressWidget@yearsByCategory');
+        \Widget::register('mediapressTypes', '\Modules\Mediapress\Widgets\MediaPressWidget@types');
+        \Widget::register('mediapressLinks', '\Modules\Mediapress\Widgets\MediaPressWidget@links');
     }
 
     public function boot()

@@ -6,6 +6,7 @@ use Modules\Core\Repositories\BaseRepository;
 
 interface MediaRepository extends BaseRepository
 {
+    public function findByYearType($year="", $type="", $per_page=10);
     /**
      * @param string $year
      * @param int $per_page
@@ -27,6 +28,15 @@ interface MediaRepository extends BaseRepository
      * @return mixed
      */
     public function findByCategoryYear($slug, $year, $per_page=10);
+
+    /**
+     * @param $slug
+     * @param $year
+     * @param $type
+     * @param int $per_page
+     * @return mixed
+     */
+    public function findByCategoryYearByType($slug, $year, $type, $per_page=10);
 
     /**
      * @param int $limit

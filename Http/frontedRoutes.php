@@ -11,6 +11,10 @@ $router->group(['prefix' => ''], function (Router $router) {
         'as'   => 'mediapress.media.index',
         'uses' => 'PublicController@index'
     ]);
+    $router->get(LaravelLocalization::transRoute('mediapress::routes.media.year'), [
+        'as'   => 'mediapress.media.year',
+        'uses' => 'PublicController@year'
+    ]);
     $router->get(LaravelLocalization::transRoute('mediapress::routes.media.view'), [
         'as'   => 'mediapress.media.view',
         'uses' => 'PublicController@view'
@@ -29,8 +33,16 @@ $router->group(['prefix' => ''], function (Router $router) {
         'as'   => 'mediapress.category.slug',
         'uses' => 'PublicController@category'
     ]);
+    $router->get(LaravelLocalization::transRoute('mediapress::routes.category.type'), [
+        'as'   => 'mediapress.category.type',
+        'uses' => 'PublicController@categoryYearType'
+    ]);
     $router->get(LaravelLocalization::transRoute('mediapress::routes.category.year'), [
         'as'   => 'mediapress.category.year',
-        'uses' => 'PublicController@year'
+        'uses' => 'PublicController@categoryYear'
+    ]);
+    $router->get(LaravelLocalization::transRoute('mediapress::routes.media.type'), [
+        'as'   => 'mediapress.media.type',
+        'uses' => 'PublicController@type'
     ]);
 });

@@ -31,6 +31,7 @@
                         <tr>
                             <th>Id</th>
                             <th>{{ trans('mediapress::media.form.release_at') }}</th>
+                            <th>{{ trans('mediapress::media.form.media_type') }}</th>
                             <th>{{ trans('mediapress::category.title.category') }}</th>
                             <th>{{ trans('mediapress::media.form.brand_id') }}</th>
                             <th>{{ trans('mediapress::media.form.title') }}</th>
@@ -46,6 +47,11 @@
                             <td>
                                 <a href="{{ route('admin.mediapress.media.edit', [$media->id]) }}">
                                     {{ $media->release_at->format('d.m.Y') }}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ route('admin.mediapress.media.edit', [$media->id]) }}">
+                                    {{ @$media->present()->media_type }}
                                 </a>
                             </td>
                             <td>

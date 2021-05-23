@@ -65,4 +65,35 @@ class CacheMediaDecorator extends BaseCacheDecorator implements MediaRepository
                 }
             );
     }
+
+
+    /**
+     * @param string $year
+     * @param int $per_page
+     * @return array|mixed
+     */
+    public function findByYearType($year = '', $type="", $per_page = 10)
+    {
+        $page = \Request::has('page') ? \Request::query('page') : 1;
+        return $this->cache
+            ->tags([$this->entityName, 'global'])
+            ->remember("{$this->locale}.{$this->entityName}.findByType.{$year}.{$type}.{$per_page}.{$page}", $this->cacheTime,
+                function () use ($year, $type, $per_page) {
+                    return $this->repository->findByYearType($year, $type, $per_page);
+                }
+            );
+    }
+
+
+    public function findByCategoryYearByType($slug, $year, $type, $per_page = 10)
+    {
+        $page = \Request::has('page') ? \Request::query('page') : 1;
+        return $this->cache
+            ->tags([$this->entityName, 'global'])
+            ->remember("{$this->locale}.{$this->entityName}.findByCategoryYearByType.{$slug}.{$year}.{$type}.{$per_page}.{$page}", $this->cacheTime,
+                function () use ($slug, $year, $type, $per_page) {
+                    return $this->repository->findByCategoryYearByType($slug, $year, $type, $per_page);
+                }
+            );
+    }
 }

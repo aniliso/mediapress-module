@@ -2,6 +2,8 @@
 
 
 use Modules\Mediapress\Entities\Category;
+use Modules\Mediapress\Entities\Media;
+use Modules\Mediapress\Entities\Type;
 use Modules\Mediapress\Repositories\BrandRepository;
 use Modules\Mediapress\Repositories\CategoryRepository;
 use Modules\Mediapress\Repositories\MediaRepository;
@@ -20,16 +22,22 @@ class MediaPressWidget
      * @var BrandRepository
      */
     private $brand;
+    /**
+     * @var Type
+     */
+    private $type;
 
     public function __construct(
         MediaRepository $media,
         CategoryRepository $category,
-        BrandRepository $brand
+        BrandRepository $brand,
+        Type $type
     )
     {
         $this->media = $media;
         $this->category = $category;
         $this->brand = $brand;
+        $this->type = $type;
     }
 
     public function latest($limit=6, $view="latest")
@@ -71,6 +79,21 @@ class MediaPressWidget
         $medias     = $this->media->allWithBuilder()->years()->get();
         if($medias->count()>0) {
             return view('mediapress::widgets.'.$view, compact('medias'));
+        }
+        return null;
+    }
+
+    public function types($view='types')
+    {
+        $types     = $this->type->lists();
+        return view('mediapress::widgets.'.$view, compact('types'));
+    }
+
+    public function links(Media $media, $view = "links")
+    {
+        if(isset($media->settings['link'])) {
+            $links = $media->settings['link'];
+            return view('mediapress::widgets.'.$view, compact('links'));
         }
         return null;
     }

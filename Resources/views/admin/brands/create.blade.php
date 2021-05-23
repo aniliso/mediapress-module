@@ -17,9 +17,9 @@
         <div class="col-md-10">
             <div class="box box-primary">
                 <div class="box-body">
-                    {!! Form::normalInput('title', trans('mediapress::brand.form.title'), $errors) !!}
+                    {!! Form::normalInput('title', trans('mediapress::brand.form.title'), $errors, null, ['data-slug'=>'source']) !!}
 
-                    {!! Form::normalInput('slug', trans('mediapress::brand.form.slug'), $errors) !!}
+                    {!! Form::normalInput('slug', trans('mediapress::brand.form.slug'), $errors, null, ['data-slug'=>'target']) !!}
                 </div>
 
                 <div class="box-footer">

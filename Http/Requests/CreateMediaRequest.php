@@ -14,7 +14,8 @@ class CreateMediaRequest extends BaseFormRequest
             'media_desc' => '',
             'release_at' => 'required|date_format:d.m.Y',
             //'sorting'    => 'required|integer',
-            'brand'      => 'required'
+            'brand'      => 'required',
+            'media_type' => 'required'
         ];
     }
 

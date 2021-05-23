@@ -2,14 +2,17 @@
 
 return [
     'media'    => [
-        'index' => 'pressroom/{year?}',
-        'view'  => 'pressroom/press/{mediapressMedia}'
-    ],
-    'brand'    => [
-        'slug' => 'pressroom/broadcaster/{mediapressBrandSlug}'
+        'index' => 'pressroom',
+        'year'  => 'pressroom/{year?}',
+        'type'  => 'pressroom/{year}/{mediaType}',
+        'view'  => 'pressroom/post/{mediapressMedia}'
     ],
     'category' => [
-        'slug'  => 'pressroom/category/{mediapressCategory}',
-        'year'  => 'pressroom/{mediapressCategory}/{year}'
-    ]
+        'slug' => 'pressroom/category/{mediapressCategory}',
+        'year' => 'pressroom/category/{mediapressCategory}/{year}',
+        'type' => 'pressroom/category/{mediapressCategory}/{year}/{type}'
+    ],
+    'brand'    => [
+        'slug' => 'pressroom/author/{mediapressBrandSlug}'
+    ],
 ];

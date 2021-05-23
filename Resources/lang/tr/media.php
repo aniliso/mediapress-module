@@ -9,6 +9,7 @@ return [
         'media'        => 'Medya',
         'create media' => 'Medya Ekle',
         'edit media'   => 'Medya Düzenle',
+        'digital media' => 'Dijital Media'
     ],
     'button'           => [
         'create media' => 'Medya Ekle',
@@ -25,7 +26,17 @@ return [
         'brand_id'    => 'Yayıncı',
         'sorting'     => 'Sıralama',
         'status'      => '&nbsp;Durum',
-        'image'       => 'Resim'
+        'image'       => 'Resimler',
+        'media_types' => [
+            'physical' => 'Yazılı Medya',
+            'digital'  => 'Dijital Medya'
+        ],
+        'link'        => [
+            'author'  => 'Yayıncı',
+            'title'   => 'Başlık',
+            'website' => 'Website',
+            'date'    => 'Tarih'
+        ]
     ],
     'select'           => [
         'media_type' => [

@@ -3,11 +3,13 @@
 namespace Modules\Mediapress\Http\Controllers;
 
 use Breadcrumbs;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Modules\Core\Http\Controllers\BasePublicController;
 use Modules\Mediapress\Entities\Brand;
 use Modules\Mediapress\Entities\Category;
 use Modules\Mediapress\Entities\Media;
+use Modules\Mediapress\Entities\Type;
 use Modules\Mediapress\Repositories\CategoryRepository;
 use Modules\Mediapress\Repositories\MediaRepository;
 
@@ -25,8 +27,12 @@ class PublicController extends BasePublicController
      * @var \Illuminate\Foundation\Application|mixed
      */
     private $per_page;
+    /**
+     * @var Type
+     */
+    private $type;
 
-    public function __construct(MediaRepository $media, CategoryRepository $category)
+    public function __construct(MediaRepository $media, CategoryRepository $category, Type $type)
     {
         parent::__construct();
         $this->media = $media;
@@ -41,23 +47,60 @@ class PublicController extends BasePublicController
             });
         }
         /* End Default Breadcrumbs */
+        $this->type = $type;
     }
     /**
      * Display a listing of the resource.
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|Response|\Illuminate\View\View
      */
-    public function index($year = "")
+    public function index()
     {
-        if($year) {
-            $medias = $this->media->findByYear((int)$year, $this->per_page);
-        } else {
-            $medias = $this->media->paginate($this->per_page);
-        }
+
+        $medias = $this->media->paginate($this->per_page);
 
         $this->setTitle(trans('mediapress::mediapress.title.mediapress'))
             ->setDescription(trans('mediapress::mediapress.title.mediapress'));
 
         return view('mediapress::index', compact('medias'));
+    }
+
+    public function year(Request $request)
+    {
+        $year = (int)$request->segment(3);
+        $medias = $this->media->findByYear($year, $this->per_page);
+
+        $title = trans('mediapress::mediapress.title.mediapress'). ' '. $year;
+
+        $this->setTitle($title)
+            ->setDescription($title);
+
+        Breadcrumbs::register('mediapress.year', function ($breadcrumbs) use ($year) {
+            $breadcrumbs->parent('mediapress.index');
+            $breadcrumbs->push($year);
+        });
+
+        return view('mediapress::year', compact('medias', 'title', 'year'));
+    }
+
+    public function type(Request $request)
+    {
+        $year = (int)$request->segment(3);
+        $type = $request->segment(4);
+
+        $medias = $this->media->findByYearType($year, $type, $this->per_page);
+
+        $title = $medias->first()->present()->media_type . ' ' . $year;
+
+        $this->setTitle($title)
+            ->setDescription($title);
+
+        Breadcrumbs::register('mediapress.year', function ($breadcrumbs) use ($year, $title) {
+            $breadcrumbs->parent('mediapress.index');
+            $breadcrumbs->push($year, localize_trans_url(locale(), "mediapress::routes.media.year", ['year'=>$year]));
+            $breadcrumbs->push($title);
+        });
+
+        return view('mediapress::types', compact('medias', 'title'));
     }
 
     public function view(Media $media)
@@ -93,20 +136,43 @@ class PublicController extends BasePublicController
         return view('mediapress::category', compact('category', 'medias'));
     }
 
-    public function year(Category $category, $year = "")
+    public function categoryYear(Category $category, Request $request)
     {
+        $year = (int)$request->segment(5);
         $medias = $this->media->findByCategoryYear($category->slug, $year, $this->per_page);
 
-        $this->setTitle($category->name . ' ' . $year)
-            ->setDescription($category->name . ' '. $year);
+        $title = $category->name . ' ' . $year;
 
-        Breadcrumbs::register('mediapress.year', function ($breadcrumbs) use ($category, $year) {
+        $this->setTitle($title)
+            ->setDescription($title);
+
+        Breadcrumbs::register('mediapress.category.year', function ($breadcrumbs) use ($category, $year) {
             $breadcrumbs->parent('mediapress.index');
             $breadcrumbs->push($category->name, $category->url);
-            $breadcrumbs->push($category->name . ' ' . $year);
+            $breadcrumbs->push($year);
         });
 
-        return view('mediapress::year', compact('medias', 'category', 'year'));
+        return view('mediapress::category-year', compact('medias', 'category', 'year', 'title'));
+    }
+
+
+    public function categoryYearType(Category $category, Request $request)
+    {
+        $year = (int)$request->segment(5);
+        $type = $request->segment(6);
+
+        $medias = $this->media->findByCategoryYearByType($category->slug, $year, $type, $this->per_page);
+
+        $title = $category->name . ' ' . $year . ' '. $this->type->get($type);
+
+        Breadcrumbs::register('mediapress.year', function ($breadcrumbs) use ($category, $year, $type, $title) {
+            $breadcrumbs->parent('mediapress.index');
+            $breadcrumbs->push($category->name, $category->url);
+            $breadcrumbs->push($year, localize_trans_url(locale(), "mediapress::routes.media.year", ['year'=>$year]));
+            $breadcrumbs->push($this->type->get($type));
+        });
+
+        return view('mediapress::types', compact('medias', 'title'));
     }
 
     public function brand(Brand $brand)

@@ -29,7 +29,7 @@ class EloquentMediaRepository extends EloquentBaseRepository implements MediaRep
 
         event(new MediaWasUpdated($model, $data));
 
-        event(new MediaSaving($model));
+//        event(new MediaSaving($model));
 
         return $model;
     }
@@ -72,6 +72,25 @@ class EloquentMediaRepository extends EloquentBaseRepository implements MediaRep
         return $this->model
             ->where("brand_id", $brand)
             ->orderBy('created_at', 'DESC')
+            ->paginate($per_page);
+    }
+
+    public function findByYearType($year = "", $type = "", $per_page = 10)
+    {
+        return $this->model
+            ->whereYear($year)
+            ->whereType($type)
+            ->paginate($per_page);
+    }
+
+    public function findByCategoryYearByType($slug, $year, $type, $per_page = 10)
+    {
+        return $this->model
+            ->whereYear($year)
+            ->whereType($type)
+            ->whereHas("category.translations", function (Builder $q) use ($slug) {
+                $q->where('mediapress__category_translations.slug', $slug);
+            })
             ->paginate($per_page);
     }
 }

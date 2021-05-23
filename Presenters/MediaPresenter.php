@@ -3,6 +3,7 @@
 namespace Modules\Mediapress\Presenters;
 
 use Modules\Core\Presenters\BasePresenter;
+use Modules\Mediapress\Entities\Type;
 
 class MediaPresenter extends BasePresenter
 {
@@ -40,5 +41,10 @@ class MediaPresenter extends BasePresenter
     public function yearurl($slug = "")
     {
         return localize_trans_url(locale(), 'mediapress::routes.category.year', ['mediapressCategory' => $slug, 'year'=>$this->entity->years]);
+    }
+
+    public function media_type()
+    {
+        return app(Type::class)->get($this->entity->media_type);
     }
 }
