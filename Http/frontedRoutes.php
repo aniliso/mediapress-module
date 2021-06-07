@@ -4,8 +4,8 @@ use Illuminate\Routing\Router;
 
 /** @var Router $router */
 $router->group(['prefix' => ''], function (Router $router) {
-    $router->bind('mediapressMedia', function ($slug) {
-        return app('Modules\Mediapress\Repositories\MediaRepository')->findBySlug($slug);
+    $router->bind('mediapressMedia', function ($id) {
+        return app('Modules\Mediapress\Repositories\MediaRepository')->find($id);
     });
     $router->get(LaravelLocalization::transRoute('mediapress::routes.media.index'), [
         'as'   => 'mediapress.media.index',

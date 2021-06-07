@@ -30,7 +30,7 @@
                                     </div>
                                 @endforeach
 
-                                <div class="box-body" v-if="media_type == 'digital'">
+                                <div class="box-body">
                                     <fieldset>
                                         <legend>@lang('mediapress::media.title.digital media')</legend>
                                         <template v-for="(emr, key) in link">

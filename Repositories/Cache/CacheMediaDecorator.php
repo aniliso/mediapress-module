@@ -77,7 +77,7 @@ class CacheMediaDecorator extends BaseCacheDecorator implements MediaRepository
         $page = \Request::has('page') ? \Request::query('page') : 1;
         return $this->cache
             ->tags([$this->entityName, 'global'])
-            ->remember("{$this->locale}.{$this->entityName}.findByType.{$year}.{$type}.{$per_page}.{$page}", $this->cacheTime,
+            ->remember("{$this->locale}.{$this->entityName}.findByYearType.{$year}.{$type}.{$per_page}.{$page}", $this->cacheTime,
                 function () use ($year, $type, $per_page) {
                     return $this->repository->findByYearType($year, $type, $per_page);
                 }

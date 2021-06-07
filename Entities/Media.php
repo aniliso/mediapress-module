@@ -66,7 +66,7 @@ class Media extends Model
 
     public function getUrlAttribute()
     {
-        return localize_trans_url(locale(), 'mediapress::routes.media.view', ['mediapressMedia'=>$this->slug]);
+        return localize_trans_url(locale(), 'mediapress::routes.media.view', ['mediapressMedia'=>$this->id]);
     }
 
     public function getYearUrlAttribute()

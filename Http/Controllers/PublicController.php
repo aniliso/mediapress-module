@@ -89,7 +89,7 @@ class PublicController extends BasePublicController
 
         $medias = $this->media->findByYearType($year, $type, $this->per_page);
 
-        $title = $medias->first()->present()->media_type . ' ' . $year;
+        $title = $this->type->get($type) . ' ' . $year;
 
         $this->setTitle($title)
             ->setDescription($title);
@@ -108,7 +108,7 @@ class PublicController extends BasePublicController
         if(!$media) return abort(404);
 
         $this->setTitle($media->title)
-             ->setDescription(\Str::words($media->description, 10));
+            ->setDescription(\Str::words($media->description, 10));
 
         Breadcrumbs::register('mediapress.view', function ($breadcrumbs) use ($media) {
             $breadcrumbs->parent('mediapress.index');
@@ -164,6 +164,9 @@ class PublicController extends BasePublicController
         $medias = $this->media->findByCategoryYearByType($category->slug, $year, $type, $this->per_page);
 
         $title = $category->name . ' ' . $year . ' '. $this->type->get($type);
+
+        $this->setTitle($title)
+            ->setDescription($title);
 
         Breadcrumbs::register('mediapress.year', function ($breadcrumbs) use ($category, $year, $type, $title) {
             $breadcrumbs->parent('mediapress.index');

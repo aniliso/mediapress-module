@@ -30,7 +30,7 @@
                                         @include('mediapress::admin.media.partials.create-fields', ['lang' => $locale])
                                     </div>
                                 @endforeach
-                                <div class="box-body" v-if="media_type == 'digital'">
+                                <div class="box-body">
                                     <fieldset>
                                         <legend>@lang('mediapress::media.title.digital media')</legend>
                                     <template v-for="(emr, key) in link">
@@ -38,25 +38,25 @@
                                             <div class="col-md-2">
                                                 <div class="form-group">
                                                     <label v-if="key == 0">@lang('mediapress::media.form.link.author')</label>
-                                                    <input :name="'settings[link]['+key+'][author]'" placeholder="@lang('mediapress::media.form.link.author')" class="form-control" :value="emr.author" />
+                                                    <input :name="'settings[link]['+key+'][author]'" placeholder="@lang('mediapress::media.form.link.author')" class="form-control" />
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label v-if="key == 0">@lang('mediapress::media.form.link.title')</label>
-                                                    <input :name="'settings[link]['+key+'][title]'" placeholder="@lang('mediapress::media.form.link.title')" class="form-control" :value="emr.title" />
+                                                    <input :name="'settings[link]['+key+'][title]'" placeholder="@lang('mediapress::media.form.link.title')" class="form-control" />
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label v-if="key == 0">@lang('mediapress::media.form.link.website')</label>
-                                                    <input :name="'settings[link]['+key+'][website]'" placeholder="@lang('mediapress::media.form.link.website')" class="form-control" :value="emr.website" />
+                                                    <input :name="'settings[link]['+key+'][website]'" placeholder="@lang('mediapress::media.form.link.website')" class="form-control" />
                                                 </div>
                                             </div>
                                             <div class="col-md-2">
                                                 <div class="form-group">
                                                     <label v-if="key == 0">@lang('mediapress::media.form.link.date')</label>
-                                                    <date-picker :name="'settings[link]['+key+'][date]'" :config="options" placeholder="@lang('mediapress::media.form.link.title')" :value="emr.date"></date-picker>
+                                                    <date-picker :name="'settings[link]['+key+'][date]'" :config="options" placeholder="@lang('mediapress::media.form.link.title')"></date-picker>
                                                 </div>
                                             </div>
                                             <div class="col-md-2">
@@ -153,11 +153,7 @@
                 media_type: '{{ old('media_type', 'physical') }}',
                 settings: [],
                 link :
-                    @if(is_array(old('settings.link')))
-                        {!! json_encode(old('settings.link')) !!}
-                    @else
-                        [{ author: '', title   : '', website : '', date : '' }]
-                    @endif
+                    [{ author: '', title   : '', website : '', date : '' }]
                 ,
                 options: {
                     format: 'DD.MM.YYYY',
