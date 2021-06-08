@@ -15,7 +15,6 @@ class ChangeBrandColumnToMediapressMediaTable extends Migration
     {
         Schema::table('mediapress__media', function (Blueprint $table) {
             $table->integer('brand_id')->index()->nullable();
-            $table->dropColumn('brand');
         });
     }
 
@@ -27,7 +26,6 @@ class ChangeBrandColumnToMediapressMediaTable extends Migration
     public function down()
     {
         Schema::table('mediapress__media', function (Blueprint $table) {
-            $table->string('brand')->nullable();
             $table->dropColumn('brand_id');
         });
     }

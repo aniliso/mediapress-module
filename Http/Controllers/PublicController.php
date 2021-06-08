@@ -84,7 +84,7 @@ class PublicController extends BasePublicController
 
     public function type(Request $request)
     {
-        $year = (int)$request->segment(3);
+        $year = $request->segment(3);
         $type = $request->segment(4);
 
         $medias = $this->media->findByYearType($year, $type, $this->per_page);

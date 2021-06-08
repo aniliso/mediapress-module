@@ -38,35 +38,35 @@
                                             <div class="col-md-2">
                                                 <div class="form-group">
                                                     <label v-if="key == 0">@lang('mediapress::media.form.link.author')</label>
-                                                    <input :name="'settings[link]['+key+'][author]'" placeholder="@lang('mediapress::media.form.link.author')" class="form-control" />
+                                                    <input :name="'settings[link]['+key+'][author]'" placeholder="@lang('mediapress::media.form.link.author')" class="form-control" v-model="emr.author" />
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label v-if="key == 0">@lang('mediapress::media.form.link.title')</label>
-                                                    <input :name="'settings[link]['+key+'][title]'" placeholder="@lang('mediapress::media.form.link.title')" class="form-control" />
+                                                    <input :name="'settings[link]['+key+'][title]'" placeholder="@lang('mediapress::media.form.link.title')" class="form-control" v-model="emr.title" />
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label v-if="key == 0">@lang('mediapress::media.form.link.website')</label>
-                                                    <input :name="'settings[link]['+key+'][website]'" placeholder="@lang('mediapress::media.form.link.website')" class="form-control" />
+                                                    <input :name="'settings[link]['+key+'][website]'" placeholder="@lang('mediapress::media.form.link.website')" class="form-control"  v-model="emr.website" />
                                                 </div>
                                             </div>
                                             <div class="col-md-2">
                                                 <div class="form-group">
                                                     <label v-if="key == 0">@lang('mediapress::media.form.link.date')</label>
-                                                    <date-picker :name="'settings[link]['+key+'][date]'" :config="options" placeholder="@lang('mediapress::media.form.link.title')"></date-picker>
+                                                    <date-picker :name="'settings[link]['+key+'][date]'" :config="options" placeholder="@lang('mediapress::media.form.link.title')"  v-model="emr.date"></date-picker>
                                                 </div>
                                             </div>
                                             <div class="col-md-2">
                                                 <label v-if="key == 0">&nbsp;</label>
                                                 <div class="form-group">
                                                     <a class="btn-floating"
-                                                       v-on:click="addRow(key, 'link')" v-if="link.length < 20">
+                                                       v-on:click="addRow(key)" v-if="link.length < 20">
                                                         <i class="fa fa-plus"></i></a>
                                                     <a class="btn-floating"
-                                                       v-on:click="removeRow(key, 'link')" v-if="link.length > 1">
+                                                       v-on:click="removeRow(key)" v-if="link.length > 1">
                                                         <i class="fa fa-minus"></i></a>
                                                 </div>
                                             </div>
@@ -163,15 +163,11 @@
                 }
             },
             methods: {
-                addRow: function (index, id) {
-                    if(id == 'link') {
-                        this.link.splice(index + 1, 0, {});
-                    }
+                addRow: function (index) {
+                    this.link.splice(index + 1, 0, {});
                 },
-                removeRow: function (index, id) {
-                    if(id == 'link') {
-                        this.link.splice(index, 1);
-                    }
+                removeRow: function (index) {
+                    this.link.splice(index, 1);
                 }
             }
         });

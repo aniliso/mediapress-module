@@ -16,7 +16,7 @@ class Media extends Model
     protected $table = 'mediapress__media';
     public $translatedAttributes = ['title', 'slug', 'description'];
     protected $fillable = [
-        'category_id', 'brand_id', 'title', 'slug', 'description', 'media_desc', 'brand', 'settings', 'sorting', 'release_at', 'status', 'media_type'
+        'category_id', 'brand_id', 'title', 'slug', 'description', 'media_desc', 'settings', 'sorting', 'release_at', 'status', 'media_type'
     ];
 
     protected $casts = [
