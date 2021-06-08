@@ -152,9 +152,7 @@
             data: {
                 media_type: '{{ old('media_type', 'physical') }}',
                 settings: [],
-                link :
-                    [{ author: '', title   : '', website : '', date : '' }]
-                ,
+                link :  {!! isset(old('settings')['link']) ? json_encode(old('settings')['link']) : "[{ author: '', title   : '', website : '', date : '' }]" !!},
                 options: {
                     format: 'DD.MM.YYYY',
                     useCurrent: true,

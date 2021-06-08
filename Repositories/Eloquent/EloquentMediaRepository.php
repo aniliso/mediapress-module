@@ -18,7 +18,7 @@ class EloquentMediaRepository extends EloquentBaseRepository implements MediaRep
 
         event(new MediaWasCreated($model, $data));
 
-        event(new MediaSaving($model));
+//        event(new MediaSaving($model));
 
         return $model;
     }
