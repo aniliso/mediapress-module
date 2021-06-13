@@ -6,10 +6,11 @@ return [
     'edit resource'    => 'Medya Düzenle',
     'destroy resource' => 'Medya Sil',
     'title'            => [
-        'media'        => 'Medya',
-        'create media' => 'Medya Ekle',
-        'edit media'   => 'Medya Düzenle',
-        'digital media' => 'Dijital Media'
+        'media'          => 'Medya',
+        'create media'   => 'Medya Ekle',
+        'edit media'     => 'Medya Düzenle',
+        'digital media'  => 'Dijital Medya',
+        'physical media' => 'Yazılı Medya'
     ],
     'button'           => [
         'create media' => 'Medya Ekle',
@@ -35,6 +36,7 @@ return [
             'author'  => 'Yayıncı',
             'title'   => 'Başlık',
             'website' => 'Website',
+            'image'   => 'Resim Sıra No',
             'date'    => 'Tarih'
         ]
     ],

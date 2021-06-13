@@ -91,9 +91,26 @@ class MediaPressWidget
 
     public function links(Media $media, $view = "links")
     {
-        if(isset($media->settings['link'])) {
-            $links = $media->settings['link'];
-            return view('mediapress::widgets.'.$view, compact('links'));
+        if($media->media_type == 'digital') {
+            if(isset($media->settings['link'])) {
+                $digitals = $media->settings['link'];
+                return view('mediapress::widgets.'.$view, compact('digitals'));
+            }
+        } else {
+            if(isset($media->settings['link'])) {
+                $images = $media->present()->images(800,null,'resize',80);
+                $physicals = $media->settings['link'];
+                foreach ($physicals as &$physical)
+                {
+                    if(isset($physical['image'])) {
+                        $image = $images[$physical['image'] - 1];
+                        if (isset($image)) {
+                            $physical['image'] = $images[$physical['image'] - 1];
+                        }
+                    }
+                }
+                return view('mediapress::widgets.'.$view, compact('physicals'));
+            }
         }
         return null;
     }

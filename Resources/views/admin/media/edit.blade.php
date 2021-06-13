@@ -32,7 +32,8 @@
 
                                 <div class="box-body">
                                     <fieldset>
-                                        <legend>@lang('mediapress::media.title.digital media')</legend>
+                                        <legend v-if="media_type == 'physical'">@lang('mediapress::media.title.physical media')</legend>
+                                        <legend v-if="media_type == 'digital'">@lang('mediapress::media.title.digital media')</legend>
                                         <template v-for="(emr, key) in link">
                                             <div class="row">
                                                 <div class="col-md-2">
@@ -48,9 +49,13 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <div class="form-group">
+                                                    <div class="form-group" v-if="media_type == 'digital'">
                                                         <label v-if="key == 0">@lang('mediapress::media.form.link.website')</label>
                                                         <input :name="'settings[link]['+key+'][website]'" placeholder="@lang('mediapress::media.form.link.website')" class="form-control" v-model="emr.website" />
+                                                    </div>
+                                                    <div class="form-group" v-if="media_type == 'physical'">
+                                                        <label v-if="key == 0">@lang('mediapress::media.form.link.image')</label>
+                                                        <input :name="'settings[link]['+key+'][image]'" placeholder="@lang('mediapress::media.form.link.image')" class="form-control" v-model="emr.image" />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2">
